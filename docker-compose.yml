@@ -15,3 +15,5 @@ services:
     container_name: face_recognition_app
     devices:
       - "/dev/video0:/dev/video0"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -27,7 +27,7 @@ class MainProcess:
         self.stop()
         self.should_run = True
         self.start()
-        print("顔認識スクリプトをi再起動しました。")
+        print("顔認識スクリプトを再起動しました。")
 
 main_process = MainProcess()
 
@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 class ImageData(BaseModel):
-    name: str
+    id: str
     data_url: str
 
 @app.post("/upload")
@@ -53,7 +53,7 @@ async def upload_image(image_data: ImageData):
         image_bytes = base64.b64decode(base64_data)
         
         # ファイル名を作成（拡張子はjpgとする）
-        filename = f"{image_data.name}.jpg"
+        filename = f"{image_data.id}.jpg"
         filepath = os.path.join('/data/input', filename)
         
         # 画像を保存

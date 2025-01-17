@@ -6,8 +6,10 @@ import time
 from collections import defaultdict
 from dotenv import load_dotenv
 import requests
+from urllib.parse import urljoin
 
-API_ENDPOINT = os.getenv('API_ENDPOINT')
+load_dotenv()
+API_URL = os.getenv('API_URL')
 
 # 表示フラグ
 DISPLAY_VIDEO = False
@@ -20,10 +22,10 @@ def post_to_api(name, timestamp):
     """検出した顔の情報をAPIにPOSTする"""
     try:
         data = {
-            "name": name,
+            "id": name,
             "detected_at": timestamp
         }
-        response = requests.post(API_ENDPOINT, json=data)
+        response = requests.post(urljoin(API_URL, "api/face-recognitions"), json=data)
         if response.status_code == 200:
             print(f"APIへの送信成功: {name}")
         else:
